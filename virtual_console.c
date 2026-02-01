@@ -42,6 +42,36 @@ void str_to_int_array(char str1[9], int int_array[8]) {
 	return;
 }
 
+void arithmetic() {
+	char operator;
+	int num1;
+	int num2;
+	printf("Welcome to the calculator. Please enter an operator (+, -, * or /): ");
+	scanf("%c", &operator);
+	printf("Enter your first number: ");
+	scanf("%d", &num1);
+	printf("Enter your second number: ");
+	scanf("%d", &num2);
+	switch(operator) {
+		case '+':
+		printf("%d + %d = %d\n", num1, num2, (num1 + num2));
+		break;
+		case '-':
+		printf("%d - %d = %d\n", num1, num2, (num1 - num2));
+		break;
+		case '*':
+		printf("%d * %d = %d\n", num1, num2, (num1 * num2));
+		break;
+		case '/':
+		printf("%d / %d = %dr%d\n", num1, num2, (num1 / num2), (num1 % num2));
+		break;
+		default:
+		printf("Invalid operator. Please try again.\n");
+		break;
+	}
+	return;
+}
+
 void convert(int num) {
 	int local_num = num;
 	int rem = 0;
@@ -124,20 +154,29 @@ void command_line(string directory) {
 	cmds[1] = cmd_ptr;
 	if(strcmp(cmds[0], "help")==0) {
 		printf("Command list: \n");
-		printf("help : View command list\n");
-		printf("convert : Convert a decimal integer up to 255 to an 8 bit binary\n");
-		printf("convert_bin : Convert an 8 bit binary back to a decimal integer\n");
-		printf("convert_hex : Convert an 8 bit binary to a 2 digit hex code\n");
-		printf("echo : Print a string that you enter\n");
-		printf("exit : Quit the program\n");
-		printf("clr : Clear the entire terminal (good for cleanup)\n");
+		printf("  calc: Open the calculator app that can perform arithmetic (+, -, *, /)\n\n");
+		printf("  convert : Convert a decimal integer up to 255 to an 8 bit binary\n");
+		printf("  convert_bin : Convert an 8 bit binary back to a decimal integer\n");
+		printf("  convert_hex : Convert an 8 bit binary to a 2 digit hex code\n\n");
+		printf("  echo : Print a string that you enter\n");
+		printf("  help: View command list\n");
+		printf("  exit: Quit the program\n");
+		printf("  clr: Clear the entire terminal (good for cleanup)\n\n");
 		printf("Just type a command and your number/string argument!\n");
-		printf("Just make sure that you type a space between your argument and command.\n");
+		printf("Make sure that you type a space between argument and command!\n");
 		printf("More commands will be added in the future!\n");
+	}
+	else if(strcmp(cmds[0], "calc")==0) {
+		if(cmds[1]!=NULL) {
+			printf("Unexpected argument in 'calc'. Please try again. \n");
+			command_line(directory);
+			return;
+		}
+		arithmetic();
 	}
 	else if(strcmp(cmds[0], "convert")==0) {
 		if(cmds[1]==NULL) {
-			printf("Command 'convert' expects an integer argument. Please try again.\n");
+			printf("Command 'convert' expects an integer argument. Please try again. \n");
 			command_line(directory);
 			return;
 		}
